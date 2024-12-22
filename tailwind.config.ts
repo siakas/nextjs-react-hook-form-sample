@@ -56,6 +56,9 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontSize: {
+        base: ["16px", "1.75"],
+      },
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports

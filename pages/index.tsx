@@ -1,24 +1,15 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import { Button } from "@/components/ui/button";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import { Layout } from "@/components/layout/Layout";
 
 export default function Home() {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main>
-        <Button>ボタン</Button>
-      </main>
-    </div>
+    <Layout>
+      <h1>hogehoge</h1>
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe nostrum
+        quo modi qui nulla quibusdam accusantium tempore rem. Delectus eveniet
+        eum natus ad dignissimos architecto perspiciatis voluptates nostrum
+        facilis enim.
+      </p>
+    </Layout>
   );
 }
