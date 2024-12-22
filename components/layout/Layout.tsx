@@ -20,11 +20,11 @@ export const Layout = ({ children }: Props) => {
     <div
       className={`${geistSans.variable} ${geistMono.variable} font-[family-name:var(--font-geist-sans)] text-base`}
     >
-      <main className="flex min-h-screen flex-col items-center justify-center bg-background">
-        <div className="min-h-screen w-full max-w-5xl rounded-lg bg-card px-32 py-16 shadow-lg">
+      <div className="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
+        <main className="mx-auto max-w-3xl rounded-lg bg-white p-8 shadow">
           {children}
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };
