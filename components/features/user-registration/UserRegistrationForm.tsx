@@ -21,7 +21,7 @@ export const UserRegistrationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
         <Label htmlFor="username">ユーザー名</Label>
         <Input type="text" id="username" {...register("username")} />

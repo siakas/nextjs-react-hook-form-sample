@@ -7,7 +7,7 @@ type Props = {
 
 export const Label = ({ htmlFor, children }: Props) => {
   return (
-    <label htmlFor={htmlFor} className="mb-2 block text-sm font-bold">
+    <label htmlFor={htmlFor} className="mb-1 block text-sm font-bold">
       {children}
     </label>
   );
