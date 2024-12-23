@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { InputErrorMessage } from "@/components/features/user-registration/InputErrorMessage";
 import { Label } from "@/components/features/user-registration/Label";
 import { Button } from "@/components/ui/button";
@@ -27,8 +28,13 @@ export const SettingsForm = () => {
   });
 
   const onSubmit = (data: AppSettings) => {
-    console.log(data);
-    alert("設定を保存しました");
+    toast("設定を保存しました：", {
+      description: (
+        <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   };
 
   return (
@@ -72,6 +78,13 @@ export const SettingsForm = () => {
 
       <div className="flex justify-center pt-8">
         <Button type="submit">設定を保存</Button>
+        {/* <Button
+          type="button"
+          variant="outline"
+          onClick={() => toast("こんにちは")}
+        >
+          トースト起動
+        </Button> */}
       </div>
     </form>
   );

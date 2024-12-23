@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import type { ReactNode } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,7 @@ export const Layout = ({ children }: Props) => {
           {children}
         </main>
       </div>
+      <Toaster className="font-sans text-base" />
     </div>
   );
 };

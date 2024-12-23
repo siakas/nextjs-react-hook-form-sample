@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { InputErrorMessage } from "@/components/features/user-registration/InputErrorMessage";
 import { Label } from "@/components/features/user-registration/Label";
 import { Button } from "@/components/ui/button";
@@ -16,8 +17,13 @@ export const UserRegistrationForm = () => {
   });
 
   const onSubmit = (data: UserRegistration) => {
-    console.log(data);
-    alert("登録が完了しました");
+    toast("設定を保存しました：", {
+      description: (
+        <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
   };
 
   return (
