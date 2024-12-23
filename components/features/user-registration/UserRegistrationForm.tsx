@@ -1,19 +1,27 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { InputErrorMessage } from "@/components/features/user-registration/InputErrorMessage";
-import { Label } from "@/components/features/user-registration/Label";
 import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { userRegistrationSchema, type UserRegistration } from "@/types/schema";
 
 export const UserRegistrationForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<UserRegistration>({
+  const form = useForm<UserRegistration>({
     resolver: zodResolver(userRegistrationSchema),
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
   const onSubmit = (data: UserRegistration) => {
@@ -27,48 +35,64 @@ export const UserRegistrationForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div>
-        <Label htmlFor="username">ユーザー名</Label>
-        <Input type="text" id="username" {...register("username")} />
-        {errors.username && (
-          <InputErrorMessage>{errors.username.message}</InputErrorMessage>
-        )}
-      </div>
-
-      <div>
-        <Label htmlFor="email">メールアドレス</Label>
-        <Input type="email" id="email" {...register("email")} />
-        {errors.email && (
-          <InputErrorMessage>{errors.email.message}</InputErrorMessage>
-        )}
-      </div>
-
-      <div>
-        <Label htmlFor="password">パスワード</Label>
-        <Input type="password" id="password" {...register("password")} />
-        {errors.password && (
-          <InputErrorMessage>{errors.password.message}</InputErrorMessage>
-        )}
-      </div>
-
-      <div>
-        <Label htmlFor="confirmPassword">パスワード（確認）</Label>
-        <Input
-          type="password"
-          id="confirmPassword"
-          {...register("confirmPassword")}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ユーザー名</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-        {errors.confirmPassword && (
-          <InputErrorMessage>
-            {errors.confirmPassword.message}
-          </InputErrorMessage>
-        )}
-      </div>
-
-      <div className="flex justify-center pt-8">
-        <Button type="submit">登録</Button>
-      </div>
-    </form>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>メールアドレス</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>パスワード</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirmPassword"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>パスワード（確認）</FormLabel>
+              <FormControl>
+                <Input type="password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex justify-center pt-8">
+          <Button type="submit">登録</Button>
+        </div>
+      </form>
+    </Form>
   );
 };
