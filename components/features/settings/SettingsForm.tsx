@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -20,15 +21,21 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { appSettingsSchema, type AppSettings } from "@/types/schema";
-import { getSettings } from "@/utils/storage";
+import { defaultSettings, getSettings, saveSettings } from "@/utils/storage";
 
 export const SettingsForm = () => {
   const form = useForm<AppSettings>({
     resolver: zodResolver(appSettingsSchema),
-    defaultValues: getSettings(),
+    defaultValues: defaultSettings,
   });
 
+  // ローカルストレージから取得した値をフォームにセット
+  useEffect(() => {
+    form.reset(getSettings());
+  }, [form]);
+
   const onSubmit = (data: AppSettings) => {
+    saveSettings(data);
     toast("設定を保存しました：", {
       description: (
         <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">
