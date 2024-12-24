@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
   Table,
   TableBody,
@@ -44,7 +45,7 @@ export const UserList = () => {
               <TableCell>{user.email}</TableCell>
               <TableCell>
                 <span className="text-xs">
-                  {new Date(user.createdAt).toLocaleString()}
+                  {dayjs(user.createdAt).format("YYYY/MM/DD HH:mm:ss")}
                 </span>
               </TableCell>
             </TableRow>
