@@ -28,6 +28,7 @@ export const UserRegistrationForm = () => {
     },
   });
 
+  // ID と作成日時はフォームの送信データに含まないため除外
   const onSubmit = (data: Omit<UserRegistration, "id" | "createdAt">) => {
     // 送信時に ID と作成日時を設定
     const newUser: UserRegistration = {
