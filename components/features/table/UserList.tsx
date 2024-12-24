@@ -7,11 +7,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { UserRegistration } from "@/types/schema";
+import type { User } from "@/types/schema";
 import { getUsers } from "@/utils/storage";
 
 export const UserList = () => {
-  const [users, setUsers] = useState<UserRegistration[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     setUsers(getUsers());
@@ -26,17 +26,27 @@ export const UserList = () => {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>ID</TableHead>
             <TableHead>ユーザー名</TableHead>
             <TableHead>メールアドレス</TableHead>
             <TableHead>登録日時</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {users.map((user, index) => (
-            <TableRow key={index}>
+          {users.map((user) => (
+            <TableRow key={user.id}>
+              <TableCell>
+                <span className="text-xs text-gray-400">
+                  {user.id.slice(0, 8)}
+                </span>
+              </TableCell>
               <TableCell>{user.username}</TableCell>
               <TableCell>{user.email}</TableCell>
-              <TableCell>{new Date().toLocaleString()}</TableCell>
+              <TableCell>
+                <span className="text-xs">
+                  {new Date(user.createdAt).toLocaleString()}
+                </span>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

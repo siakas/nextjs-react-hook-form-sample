@@ -1,4 +1,4 @@
-import type { AppSettings, UserRegistration } from "@/types/schema";
+import type { AppSettings, User } from "@/types/schema";
 
 const USERS_KEY = "registered_users" as const;
 const SETTINGS_KEY = "app_settings" as const;
@@ -18,7 +18,7 @@ export const defaultSettings: AppSettings = {
 /**
  * ローカルストレージに保存されたユーザー一覧を取得
  */
-export const getUsers = (): UserRegistration[] => {
+export const getUsers = (): User[] => {
   if (typeof window === "undefined") return [];
 
   const savedUsers = localStorage.getItem(USERS_KEY);
@@ -28,7 +28,7 @@ export const getUsers = (): UserRegistration[] => {
 /**
  * ユーザー情報をローカルストレージに保存
  */
-export const saveUser = (user: UserRegistration) => {
+export const saveUser = (user: User) => {
   const users = getUsers();
   const updatedUsers = [user, ...users];
   localStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
