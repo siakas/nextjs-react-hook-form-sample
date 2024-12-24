@@ -20,22 +20,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { useSettingStore } from "@/stores/settingStore";
 import { appSettingsSchema, type AppSettings } from "@/types/schema";
-import { defaultSettings, getSettings, saveSettings } from "@/utils/storage";
 
 export const SettingsForm = () => {
+  const settings = useSettingStore((state) => state.settings);
+  const updateSettings = useSettingStore((state) => state.updateSettings);
+
   const form = useForm<AppSettings>({
     resolver: zodResolver(appSettingsSchema),
-    defaultValues: defaultSettings,
+    defaultValues: settings,
   });
 
-  // ローカルストレージから取得した値をフォームにセット
+  // ストアから設定を取得してフォームにセット
   useEffect(() => {
-    form.reset(getSettings());
-  }, [form]);
+    form.reset(settings);
+  }, [form, settings]);
 
   const onSubmit = (data: AppSettings) => {
-    saveSettings(data);
+    updateSettings(data);
     toast("設定を保存しました：", {
       description: (
         <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">

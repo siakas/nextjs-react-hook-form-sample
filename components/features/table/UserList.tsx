@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   Table,
@@ -8,18 +7,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { User } from "@/types/schema";
-import { getUsers } from "@/utils/storage";
+import { useUserStore } from "@/stores/userStore";
 
 export const UserList = () => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    setUsers(getUsers());
-  }, []);
+  const users = useUserStore((state) => state.users);
 
   if (users.length === 0) {
-    return <p>登録されているユーザーはいません</p>;
+    return <p className="mt-6">登録されているユーザーはいません</p>;
   }
 
   return (

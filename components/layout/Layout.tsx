@@ -27,7 +27,7 @@ export const Layout = ({ children }: Props) => {
       className={`${geistSans.variable} ${geistMono.variable} ${NotoSans.variable} font-sans text-base`}
     >
       <div className="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-        <main className="mx-auto max-w-xl rounded-lg bg-white p-8 shadow">
+        <main className="mx-auto max-w-3xl rounded-lg bg-white p-8 shadow">
           {children}
         </main>
       </div>
