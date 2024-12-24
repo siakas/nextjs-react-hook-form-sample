@@ -12,6 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import type { User } from "@/types/schema";
 import { userRegistrationSchema, type UserRegistration } from "@/types/schema";
 import { saveUser } from "@/utils/storage";
 
@@ -19,19 +20,17 @@ export const UserRegistrationForm = () => {
   const form = useForm<UserRegistration>({
     resolver: zodResolver(userRegistrationSchema),
     defaultValues: {
-      id: uuidv4(),
       username: "",
       email: "",
       password: "",
       confirmPassword: "",
-      createdAt: new Date(),
     },
   });
 
   // ID と作成日時はフォームの送信データに含まないため除外
-  const onSubmit = (data: Omit<UserRegistration, "id" | "createdAt">) => {
+  const onSubmit = (data: UserRegistration) => {
     // 送信時に ID と作成日時を設定
-    const newUser: UserRegistration = {
+    const newUser: User = {
       ...data,
       id: uuidv4(),
       createdAt: new Date(),
