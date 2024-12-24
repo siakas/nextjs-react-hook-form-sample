@@ -42,7 +42,7 @@ export const UserRegistrationForm = () => {
     // フォームをリセット
     form.reset();
 
-    toast("設定を保存しました：", {
+    toast("ユーザーを登録しました：", {
       description: (
         <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(newUser, null, 2)}</code>
