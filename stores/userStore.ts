@@ -9,6 +9,8 @@ type UserStore = {
   addUser: (user: User) => void;
   /** ユーザーを削除 */
   deleteUser: (id: string) => void;
+  /** ユーザーの更新 */
+  updateUser: (id: string, updates: Pick<User, "username" | "email">) => void;
 };
 
 export const useUserStore = create<UserStore>()(
@@ -31,6 +33,16 @@ export const useUserStore = create<UserStore>()(
             }),
             false,
             "User/deleteUser",
+          ),
+        updateUser: (id, updates) =>
+          set(
+            (state) => ({
+              users: state.users.map((user) =>
+                user.id === id ? { ...user, ...updates } : user,
+              ),
+            }),
+            false,
+            "User/updateUser",
           ),
       }),
       {

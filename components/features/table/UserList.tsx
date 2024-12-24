@@ -1,5 +1,6 @@
+import { useRouter } from "next/router";
 import dayjs from "dayjs";
-import { Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +14,8 @@ import {
 import { useUserStore } from "@/stores/userStore";
 
 export const UserList = () => {
+  const router = useRouter();
+
   const users = useUserStore((state) => state.users);
   const deleteUser = useUserStore((state) => state.deleteUser);
 
@@ -20,6 +23,11 @@ export const UserList = () => {
   const handleDelete = (id: string, username: string) => {
     deleteUser(id);
     toast(`${username}のデータを削除しました`);
+  };
+
+  /** ユーザー編集画面に遷移 */
+  const handleEdit = (id: string) => {
+    router.push(`/user/${id}/edit`);
   };
 
   if (users.length === 0) {
@@ -54,13 +62,22 @@ export const UserList = () => {
                 </span>
               </TableCell>
               <TableCell>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleDelete(user.id, user.username)}
-                >
-                  <Trash2 className="size-4" />
-                </Button>
+                <div className="flex gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleEdit(user.id)}
+                  >
+                    <Pencil className="size-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleDelete(user.id, user.username)}
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}
