@@ -29,9 +29,13 @@ export const getUsers = (): User[] => {
  * ユーザー情報をローカルストレージに保存
  */
 export const saveUser = (user: User) => {
-  const users = getUsers();
-  const updatedUsers = [user, ...users];
-  localStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
+  try {
+    const users = getUsers();
+    const updatedUsers = [user, ...users];
+    localStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
+  } catch (error) {
+    console.error("Failed to save user:", error);
+  }
 };
 
 /**

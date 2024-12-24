@@ -28,10 +28,10 @@ export const UserRegistrationForm = () => {
   });
 
   // ID と作成日時はフォームの送信データに含まないため除外
-  const onSubmit = (data: UserRegistration) => {
+  const onSubmit = (formData: UserRegistration) => {
     // 送信時に ID と作成日時を設定
     const newUser: User = {
-      ...data,
+      ...formData,
       id: uuidv4(),
       createdAt: new Date(),
     };
@@ -42,7 +42,7 @@ export const UserRegistrationForm = () => {
     // フォームをリセット
     form.reset();
 
-    toast("設定を保存しました：", {
+    toast("ユーザーを登録しました：", {
       description: (
         <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(newUser, null, 2)}</code>
