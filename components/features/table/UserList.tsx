@@ -1,4 +1,7 @@
 import dayjs from "dayjs";
+import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -11,6 +14,13 @@ import { useUserStore } from "@/stores/userStore";
 
 export const UserList = () => {
   const users = useUserStore((state) => state.users);
+  const deleteUser = useUserStore((state) => state.deleteUser);
+
+  /** ユーザーの削除 */
+  const handleDelete = (id: string, username: string) => {
+    deleteUser(id);
+    toast(`${username}のデータを削除しました`);
+  };
 
   if (users.length === 0) {
     return <p className="mt-6">登録されているユーザーはいません</p>;
@@ -25,6 +35,7 @@ export const UserList = () => {
             <TableHead>ユーザー名</TableHead>
             <TableHead>メールアドレス</TableHead>
             <TableHead>登録日時</TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -41,6 +52,15 @@ export const UserList = () => {
                 <span className="text-xs">
                   {dayjs(user.createdAt).format("YYYY/MM/DD HH:mm:ss")}
                 </span>
+              </TableCell>
+              <TableCell>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleDelete(user.id, user.username)}
+                >
+                  <Trash2 className="size-4" />
+                </Button>
               </TableCell>
             </TableRow>
           ))}
