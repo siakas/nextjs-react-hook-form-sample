@@ -4,9 +4,7 @@ import type { User } from "@/types/schema";
 
 type UserStore = {
   users: User[];
-  actions: {
-    addUser: (user: User) => void;
-  };
+  addUser: (user: User) => void;
 };
 
 export const useUserStore = create<UserStore>()(
@@ -14,13 +12,16 @@ export const useUserStore = create<UserStore>()(
     persist(
       (set) => ({
         users: [],
-        actions: {
-          addUser: (user) =>
-            set((state) => ({ users: [user, ...state.users] })),
-        },
+        addUser: (user) =>
+          set(
+            (state) => ({ users: [user, ...state.users] }),
+            false,
+            "User/addUser",
+          ),
       }),
       {
         name: "UserStore",
+        partialize: (state) => ({ users: state.users }),
         storage: createJSONStorage(() => localStorage),
       },
     ),
