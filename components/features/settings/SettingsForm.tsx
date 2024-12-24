@@ -111,7 +111,7 @@ export const SettingsForm = () => {
           )}
         />
 
-        <div className="flex justify-center pt-8">
+        <div className="flex justify-center pt-2">
           <Button type="submit">設定を保存</Button>
         </div>
       </form>

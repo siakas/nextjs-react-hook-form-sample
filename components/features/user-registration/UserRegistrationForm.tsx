@@ -89,7 +89,7 @@ export const UserRegistrationForm = () => {
             </FormItem>
           )}
         />
-        <div className="flex justify-center pt-8">
+        <div className="flex justify-center pt-2">
           <Button type="submit">登録</Button>
         </div>
       </form>
