@@ -5,6 +5,7 @@ import { z } from "zod";
  */
 export const userRegistrationSchema = z
   .object({
+    id: z.string().uuid(),
     username: z
       .string()
       .min(3, "ユーザー名は3文字以上で入力してください")
@@ -18,6 +19,7 @@ export const userRegistrationSchema = z
         "パスワードは英字と数字を含める必要があります",
       ),
     confirmPassword: z.string(),
+    createdAt: z.date(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "パスワードが一致しません",

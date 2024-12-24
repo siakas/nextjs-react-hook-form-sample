@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { v4 as uuidv4 } from "uuid";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,16 +19,25 @@ export const UserRegistrationForm = () => {
   const form = useForm<UserRegistration>({
     resolver: zodResolver(userRegistrationSchema),
     defaultValues: {
+      id: uuidv4(),
       username: "",
       email: "",
       password: "",
       confirmPassword: "",
+      createdAt: new Date(),
     },
   });
 
-  const onSubmit = (data: UserRegistration) => {
+  const onSubmit = (data: Omit<UserRegistration, "id" | "createdAt">) => {
+    // 送信時に ID と作成日時を設定
+    const newUser: UserRegistration = {
+      ...data,
+      id: uuidv4(),
+      createdAt: new Date(),
+    };
+
     // ユーザーを保存
-    saveUser(data);
+    saveUser(newUser);
 
     // フォームをリセット
     form.reset();
@@ -35,7 +45,7 @@ export const UserRegistrationForm = () => {
     toast("設定を保存しました：", {
       description: (
         <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">{JSON.stringify(newUser, null, 2)}</code>
         </pre>
       ),
     });
