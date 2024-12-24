@@ -27,7 +27,7 @@ export const UserRegistrationForm = () => {
     },
   });
 
-  const addUser = useUserStore((state) => state.addUser);
+  const { addUser } = useUserStore((state) => state.actions);
 
   // ID と作成日時はフォームの送信データに含まないため除外
   const onSubmit = (formData: UserRegistration) => {
