@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { userRegistrationSchema, type UserRegistration } from "@/types/schema";
+import { saveUser } from "@/utils/storage";
 
 export const UserRegistrationForm = () => {
   const form = useForm<UserRegistration>({
@@ -25,6 +26,12 @@ export const UserRegistrationForm = () => {
   });
 
   const onSubmit = (data: UserRegistration) => {
+    // ユーザーを保存
+    saveUser(data);
+
+    // フォームをリセット
+    form.reset();
+
     toast("設定を保存しました：", {
       description: (
         <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">
@@ -32,6 +39,11 @@ export const UserRegistrationForm = () => {
         </pre>
       ),
     });
+  };
+
+  const handleReset = () => {
+    form.reset();
+    toast("フォームをリセットしました");
   };
 
   return (
@@ -89,8 +101,18 @@ export const UserRegistrationForm = () => {
             </FormItem>
           )}
         />
-        <div className="flex justify-center pt-2">
-          <Button type="submit">登録</Button>
+        <div className="flex justify-center gap-4 pt-2">
+          <Button type="submit" className="min-w-24">
+            登録
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleReset}
+            className="min-w-24"
+          >
+            リセット
+          </Button>
         </div>
       </form>
     </Form>
