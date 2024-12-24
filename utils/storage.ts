@@ -1,6 +1,5 @@
-import type { AppSettings, User } from "@/types/schema";
+import type { AppSettings } from "@/types/schema";
 
-const USERS_KEY = "registered_users" as const;
 const SETTINGS_KEY = "app_settings" as const;
 
 export const defaultSettings: AppSettings = {
@@ -13,29 +12,6 @@ export const defaultSettings: AppSettings = {
     password: "パスワードが無効です",
   },
   theme: "light",
-};
-
-/**
- * ローカルストレージに保存されたユーザー一覧を取得
- */
-export const getUsers = (): User[] => {
-  if (typeof window === "undefined") return [];
-
-  const savedUsers = localStorage.getItem(USERS_KEY);
-  return savedUsers ? JSON.parse(savedUsers) : [];
-};
-
-/**
- * ユーザー情報をローカルストレージに保存
- */
-export const saveUser = (user: User) => {
-  try {
-    const users = getUsers();
-    const updatedUsers = [user, ...users];
-    localStorage.setItem(USERS_KEY, JSON.stringify(updatedUsers));
-  } catch (error) {
-    console.error("Failed to save user:", error);
-  }
 };
 
 /**
