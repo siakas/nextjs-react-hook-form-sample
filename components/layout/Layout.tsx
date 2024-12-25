@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
 import type { ReactNode } from "react";
+import { Header } from "@/components/layout/Header";
 import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
@@ -26,8 +27,9 @@ export const Layout = ({ children }: Props) => {
     <div
       className={`${geistSans.variable} ${geistMono.variable} ${NotoSans.variable} font-sans text-base`}
     >
-      <div className="min-h-screen bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-        <main className="mx-auto max-w-3xl rounded-lg bg-white p-8 shadow">
+      <div className="min-h-screen bg-white p-4">
+        <main className="container m-auto">
+          <Header />
           {children}
         </main>
       </div>
