@@ -26,32 +26,6 @@ export const dummyUsers: User[] = [
     },
   },
   {
-    id: "550e8400-e29b-41d4-a716-446655440001",
-    email: "chen.wei@example.com",
-    username: "wei_chen",
-    hashedPassword:
-      "$2a$12$9Kd7c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/IQZyAvYo0UQCKzKyS",
-    createdAt: "2023-11-15T08:30:00Z",
-    updatedAt: "2024-03-20T14:22:33Z",
-    isActive: true,
-    isEmailVerified: true,
-    profile: {
-      fullName: "陈伟",
-      bio: "Senior Software Engineer",
-      location: "Shanghai, China",
-      website: "https://chen-wei.example.com",
-    },
-    role: "user",
-    settings: {
-      notifications: {
-        email: true,
-        push: false,
-      },
-      language: "zh",
-      timezone: "Asia/Shanghai",
-    },
-  },
-  {
     id: "550e8400-e29b-41d4-a716-446655440002",
     email: "guest.user@example.com",
     username: "temp_guest",
@@ -109,7 +83,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "田中 聡",
+      fullName: "Satoshi Tanaka",
       avatarUrl: "https://example.com/avatars/satoshi.jpg",
       bio: "モバイルアプリ開発者",
       location: "Tokyo, Japan",
@@ -259,7 +233,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "田中 芽衣",
+      fullName: "Mei Tanaka",
       bio: "UXデザイナー / 富士山が見える街に住んでいます",
       location: "Shizuoka, Japan",
       website: "https://mei-design.example.com",
@@ -382,9 +356,10 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: false,
     profile: {
-      fullName: "陈伟",
-      avatarUrl: "https://example.com/avatars/chen.jpg",
-      location: "Guangzhou, China",
+      fullName: "Wei Chen",
+      bio: "Senior Software Engineer",
+      location: "Shanghai, China",
+      website: "https://chen-wei.example.com",
     },
     role: "user",
     settings: {
@@ -434,7 +409,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "박민지",
+      fullName: "Min-ji Park",
       bio: "Game Developer | 게임 개발자",
       location: "Seoul, South Korea",
     },
@@ -479,7 +454,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "Елена Попова",
+      fullName: "Elena Popova",
       avatarUrl: "https://example.com/avatars/elena.jpg",
       bio: "Data Analyst | Ballet Dancer",
       location: "St. Petersburg, Russia",
@@ -583,7 +558,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "فاطمة السيد",
+      fullName: "Fatima Al-Sayed",
       avatarUrl: "https://example.com/avatars/fatima.jpg",
       bio: "Architect | Contemporary Islamic Design",
       location: "Dubai, UAE",
@@ -634,7 +609,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "Σοφία Παπαδόπουλος",
+      fullName: "Sofia Papadopoulos",
       avatarUrl: "https://example.com/avatars/sofia.jpg",
       location: "Athens, Greece",
       website: "https://sofia-art.example.com",
@@ -660,7 +635,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: false,
     profile: {
-      fullName: "山本 健二",
+      fullName: "Kenji Yamamoto",
       bio: "モバイルアプリ開発者 | 柴犬との暮らし",
       location: "Osaka, Japan",
     },
@@ -790,7 +765,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "鈴木 優希",
+      fullName: "Yuki Suzuki",
       avatarUrl: "https://example.com/avatars/yuki.jpg",
       bio: "アニメーションアーティスト | 猫と暮らす",
       location: "Kyoto, Japan",
@@ -867,7 +842,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "Дмитрий Волков",
+      fullName: "Dmitri Volkov",
       bio: "Quantum Computing Researcher",
       location: "Novosibirsk, Russia",
       website: "https://quantum-research.example.com",
@@ -893,7 +868,7 @@ export const dummyUsers: User[] = [
     isActive: false,
     isEmailVerified: true,
     profile: {
-      fullName: "كريم حسن",
+      fullName: "Kareem Hassan",
       avatarUrl: "https://example.com/avatars/kareem.jpg",
       location: "Alexandria, Egypt",
     },
@@ -970,7 +945,7 @@ export const dummyUsers: User[] = [
     isActive: true,
     isEmailVerified: true,
     profile: {
-      fullName: "이지은",
+      fullName: "Ji-eun Lee",
       bio: "K-beauty Content Creator | Skincare Expert",
       location: "Busan, South Korea",
       website: "https://k-beauty-tips.example.com",
