@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -25,15 +26,17 @@ export const UserList = () => {
   const deleteUser = useUserStore((state) => state.deleteUser);
 
   // フィルタリング条件によってユーザーを絞り込む
-  const filteredUsers = users.filter((user) => {
-    if (filter === "active") {
-      return user.isActive;
-    }
-    if (filter === "admin") {
-      return user.role === "admin";
-    }
-    return true;
-  });
+  const filteredUsers = useMemo(() => {
+    return users.filter((user) => {
+      if (filter === "active") {
+        return user.isActive;
+      }
+      if (filter === "admin") {
+        return user.role === "admin";
+      }
+      return true;
+    });
+  }, [users, filter]);
 
   /** ユーザーの削除 */
   const handleDelete = (id: string, username: string) => {

@@ -11,14 +11,9 @@ export const UserStatistics = () => {
   const activeUsers = users.filter((user) => user.isActive).length;
   const adminUsers = users.filter((user) => user.role === "admin").length;
 
-  const handleAllUsers = () => {
-    router.push("/");
-  };
-  const handleFilterActiveUsers = () => {
-    router.push("/?filter=active");
-  };
-  const handleFilterAdminUsers = () => {
-    router.push("/?filter=admin");
+  const handleFilterChange = (filter?: string) => {
+    const query = filter ? `/?filter=${filter}` : "/";
+    router.push(query);
   };
 
   return (
@@ -26,17 +21,17 @@ export const UserStatistics = () => {
       <UserStatisticsCard
         label="総ユーザー数"
         userCount={totalUsers}
-        onClick={handleAllUsers}
+        onClick={() => handleFilterChange()}
       />
       <UserStatisticsCard
         label="アクティブユーザー"
         userCount={activeUsers}
-        onClick={handleFilterActiveUsers}
+        onClick={() => handleFilterChange("active")}
       />
       <UserStatisticsCard
         label="管理者"
         userCount={adminUsers}
-        onClick={handleFilterAdminUsers}
+        onClick={() => handleFilterChange("admin")}
       />
     </div>
   );
