@@ -5,10 +5,6 @@ export default function Home() {
   return (
     <Layout>
       <UserList />
-      {/* <H1>ユーザー登録</H1>
-      <UserRegistrationForm />
-      <UserList />
-      <Navigation /> */}
     </Layout>
   );
 }

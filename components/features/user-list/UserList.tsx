@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
 import { Pencil, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,57 +13,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-// 仮のユーザーデータ
-const initialUsers = [
-  {
-    id: 1,
-    name: "siakas",
-    fullName: "Sanshiro SAKAI",
-    email: "sansyo@gmail.com",
-    status: "active",
-    avatar: "...",
-    role: "admin",
-    createdAt: "2021-10-01T00:00:00Z",
-    updatedAt: "2021-10-01T00:00:00Z",
-  },
-  {
-    id: 2,
-    name: "eoka",
-    fullName: "Eriko Oka",
-    email: "oka@gmail.com",
-    status: "active",
-    avatar: "...",
-    role: "admin",
-    createdAt: "2021-10-01T00:00:00Z",
-    updatedAt: "2021-10-01T00:00:00Z",
-  },
-  {
-    id: 3,
-    name: "yossy",
-    fullName: "koki yoshihara",
-    email: "koki@gmail.com",
-    status: "inactive",
-    avatar: "...",
-    role: "user",
-    createdAt: "2021-10-01T00:00:00Z",
-    updatedAt: "2021-10-01T00:00:00Z",
-  },
-  {
-    id: 4,
-    name: "dasa",
-    fullName: "Miki Asada",
-    email: "dasa@gmail.com",
-    status: "active",
-    avatar: "...",
-    role: "user",
-    createdAt: "2021-10-01T00:00:00Z",
-    updatedAt: "2021-10-01T00:00:00Z",
-  },
-];
+import { useUserStore } from "@/stores/userStore";
 
 export const UserList = () => {
-  const [users, setUsers] = useState(initialUsers);
+  const router = useRouter();
+
+  const users = useUserStore((state) => state.users);
+  const deleteUser = useUserStore((state) => state.deleteUser);
+
+  /** ユーザーの削除 */
+  const handleDelete = (id: string, username: string) => {
+    deleteUser(id);
+    toast(`${username}のデータを削除しました`);
+  };
+
+  /** ユーザー編集画面に遷移 */
+  const handleEdit = (id: string) => {
+    router.push(`/user/${id}/edit`);
+  };
+
+  if (users.length === 0) {
+    return <p className="mt-6">登録されているユーザーはいません</p>;
+  }
 
   return (
     <Card className="my-6">
@@ -73,13 +45,14 @@ export const UserList = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="whitespace-nowrap">&nbsp;</TableHead>
+              <TableHead className="w-px">&nbsp;</TableHead>
               <TableHead className="whitespace-nowrap">ニックネーム</TableHead>
               <TableHead className="whitespace-nowrap">名前</TableHead>
               <TableHead className="whitespace-nowrap">
                 メールアドレス
               </TableHead>
               <TableHead className="whitespace-nowrap">ステータス</TableHead>
+              <TableHead className="whitespace-nowrap">アクセス権</TableHead>
               <TableHead className="whitespace-nowrap">&nbsp;</TableHead>
             </TableRow>
           </TableHeader>
@@ -107,11 +80,28 @@ export const UserList = () => {
                   </Badge>
                 </TableCell>
                 <TableCell>
+                  <Badge variant="outline">
+                    {user.role === "admin"
+                      ? "管理者"
+                      : user.role === "user"
+                        ? "一般ユーザー"
+                        : "未設定"}
+                  </Badge>
+                </TableCell>
+                <TableCell>
                   <div className="flex gap-x-2">
-                    <Button variant="outline" size="icon">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handleEdit(user.id)}
+                    >
                       <Pencil className="size-4" />
                     </Button>
-                    <Button variant="outline" size="icon">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handleDelete(user.id, user.name)}
+                    >
                       <Trash2 className="size-4" />
                     </Button>
                   </div>
