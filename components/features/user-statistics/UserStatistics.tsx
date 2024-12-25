@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useUserStore } from "@/stores/userStore";
 
-export const UserStatus = () => {
+export const UserStatistics = () => {
   const users = useUserStore((state) => state.users);
 
   const totalUsers = users.length;
