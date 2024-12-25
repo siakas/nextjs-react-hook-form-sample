@@ -196,33 +196,6 @@ export const dummyUsers: User[] = [
     },
   },
   {
-    id: "550e8400-e29b-41d4-a716-446655440009",
-    email: "kim.minjae@example.com",
-    username: "minjae_k",
-    hashedPassword:
-      "$2a$12$6Kd7c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/IQZyAvYo0UQCKzKyS",
-    createdAt: "2024-01-25T15:20:00Z",
-    updatedAt: "2024-03-21T10:15:33Z",
-    isActive: true,
-    isEmailVerified: true,
-    profile: {
-      fullName: "김민재",
-      avatarUrl: "https://example.com/avatars/minjae.jpg",
-      bio: "UX Researcher",
-      location: "Seoul, South Korea",
-      website: "https://minjae-ux.example.com",
-    },
-    role: "user",
-    settings: {
-      notifications: {
-        email: true,
-        push: true,
-      },
-      language: "ko",
-      timezone: "Asia/Seoul",
-    },
-  },
-  {
     id: "123e4567-e89b-12d3-a456-426614174000",
     email: "tanaka.mei@example.com",
     username: "mei_t",
@@ -317,32 +290,6 @@ export const dummyUsers: User[] = [
       },
       language: "en",
       timezone: "UTC",
-    },
-  },
-  {
-    id: "123e4567-e89b-12d3-a456-426614174004",
-    email: "ahmed.hassan@example.com",
-    username: "ahmed_h",
-    hashedPassword:
-      "$2a$12$3Kd7c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/IQZyAvYo0UQCKzKyS",
-    createdAt: "2024-01-15T10:20:00.000Z",
-    updatedAt: "2024-03-20T08:12:44.000Z",
-    isActive: true,
-    isEmailVerified: true,
-    profile: {
-      fullName: "أحمد حسن",
-      bio: "Digital Marketing Specialist",
-      location: "Cairo, Egypt",
-      website: "https://ahmed-marketing.example.com",
-    },
-    role: "user",
-    settings: {
-      notifications: {
-        email: true,
-        push: true,
-      },
-      language: "ar",
-      timezone: "Africa/Cairo",
     },
   },
   {
@@ -468,32 +415,6 @@ export const dummyUsers: User[] = [
       },
       language: "ru",
       timezone: "Europe/Moscow",
-    },
-  },
-  {
-    id: "123e4567-e89b-12d3-a456-426614174010",
-    email: "nguyen.thi.ha@example.com",
-    username: "ha_nguyen",
-    hashedPassword:
-      "$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/IQZyAvYo0UQCKzKyS",
-    createdAt: "2023-12-15T07:30:00.000Z",
-    updatedAt: "2024-03-19T11:22:33.000Z",
-    isActive: true,
-    isEmailVerified: true,
-    profile: {
-      fullName: "Nguyễn Thị Hà",
-      bio: "Food Blogger | Culinary Explorer",
-      location: "Ho Chi Minh City, Vietnam",
-      website: "https://havietfood.example.com",
-    },
-    role: "user",
-    settings: {
-      notifications: {
-        email: true,
-        push: true,
-      },
-      language: "vi",
-      timezone: "Asia/Ho_Chi_Minh",
     },
   },
   {
