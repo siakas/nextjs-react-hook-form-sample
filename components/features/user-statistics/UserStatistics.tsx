@@ -5,7 +5,7 @@ export const UserStatistics = () => {
   const users = useUserStore((state) => state.users);
 
   const totalUsers = users.length;
-  const activeUsers = users.filter((user) => user.status === "active").length;
+  const activeUsers = users.filter((user) => user.isActive).length;
   const adminUsers = users.filter((user) => user.role === "admin").length;
 
   return (
