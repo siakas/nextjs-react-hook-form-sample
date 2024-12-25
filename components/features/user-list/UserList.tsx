@@ -46,7 +46,7 @@ export const UserList = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="w-px">&nbsp;</TableHead>
-              <TableHead className="whitespace-nowrap">ニックネーム</TableHead>
+              <TableHead className="whitespace-nowrap">表示名</TableHead>
               <TableHead className="whitespace-nowrap">名前</TableHead>
               <TableHead className="whitespace-nowrap">
                 メールアドレス
@@ -61,22 +61,25 @@ export const UserList = () => {
               <TableRow key={user.id}>
                 <TableCell>
                   <Avatar>
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>{user.name[0]}</AvatarFallback>
+                    <AvatarImage
+                      src={user.profile?.avatarUrl}
+                      alt={user.username}
+                    />
+                    <AvatarFallback>{user.username[0]}</AvatarFallback>
                   </Avatar>
                 </TableCell>
-                <TableCell className="whitespace-nowrap">{user.name}</TableCell>
                 <TableCell className="whitespace-nowrap">
-                  {user.fullName}
+                  {user.username}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {user.profile?.fullName || "-"}
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
                   {user.email}
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
-                  <Badge
-                    variant={user.status === "active" ? "default" : "secondary"}
-                  >
-                    {user.status === "active" ? "アクティブ" : "非アクティブ"}
+                  <Badge variant={user.isActive ? "default" : "secondary"}>
+                    {user.isActive ? "アクティブ" : "非アクティブ"}
                   </Badge>
                 </TableCell>
                 <TableCell>
@@ -100,7 +103,7 @@ export const UserList = () => {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => handleDelete(user.id, user.name)}
+                      onClick={() => handleDelete(user.id, user.username)}
                     >
                       <Trash2 className="size-4" />
                     </Button>

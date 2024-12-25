@@ -11,7 +11,9 @@ import {
 export const Header = () => {
   return (
     <div className="flex items-center justify-between">
-      <h1 className="text-3xl font-bold">ユーザー管理ダッシュボード</h1>
+      <h1 className="text-3xl font-bold">
+        <Link href="/">ユーザー管理ダッシュボード</Link>
+      </h1>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
@@ -21,10 +23,10 @@ export const Header = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>
-            <Link href="/users/new">新規ユーザー登録</Link>
+            <Link href="/user/new">新規ユーザー登録</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href="/users/access-management">アクセス権管理</Link>
+            <Link href="/user/access-management">アクセス権管理</Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

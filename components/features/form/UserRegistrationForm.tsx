@@ -60,7 +60,10 @@ export const UserRegistrationForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto my-4 max-w-md space-y-4"
+      >
         <FormField
           control={form.control}
           name="username"
