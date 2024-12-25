@@ -18,8 +18,22 @@ import { useUserStore } from "@/stores/userStore";
 export const UserList = () => {
   const router = useRouter();
 
+  // URL パラメータからフィルタリング条件を取得
+  const filter = router.query.filter as string;
+
   const users = useUserStore((state) => state.users);
   const deleteUser = useUserStore((state) => state.deleteUser);
+
+  // フィルタリング条件によってユーザーを絞り込む
+  const filteredUsers = users.filter((user) => {
+    if (filter === "active") {
+      return user.isActive;
+    }
+    if (filter === "admin") {
+      return user.role === "admin";
+    }
+    return true;
+  });
 
   /** ユーザーの削除 */
   const handleDelete = (id: string, username: string) => {
@@ -57,7 +71,7 @@ export const UserList = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>
                   <Avatar>
