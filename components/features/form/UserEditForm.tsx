@@ -29,7 +29,7 @@ export const UserEditForm = ({ userId }: Props) => {
   const users = useUserStore((state) => state.users);
   const updateUser = useUserStore((state) => state.updateUser);
 
-  // ユーザー情報を取得
+  // userId に一致するユーザー情報を取得
   const user = users.find((user) => user.id === userId);
 
   // フォームの設定
