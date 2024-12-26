@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -42,11 +42,6 @@ export const UserList = () => {
   const handleDelete = (id: string, username: string) => {
     deleteUser(id);
     toast(`${username}のデータを削除しました`);
-  };
-
-  /** ユーザー編集画面に遷移 */
-  const handleEdit = (id: string) => {
-    router.push(`/user/${id}/edit`);
   };
 
   if (users.length === 0) {
@@ -117,7 +112,14 @@ export const UserList = () => {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => handleEdit(user.id)}
+                      onClick={() => router.push(`/user/${user.id}`)}
+                    >
+                      <Eye className="size-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => router.push(`/user/${user.id}/edit`)}
                     >
                       <Pencil className="size-4" />
                     </Button>
