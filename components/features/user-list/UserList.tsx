@@ -50,7 +50,7 @@ export const UserList = () => {
   };
 
   if (users.length === 0) {
-    return <p className="mt-6">登録されているユーザーはいません</p>;
+    return null;
   }
 
   return (
