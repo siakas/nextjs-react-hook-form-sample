@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { UserEditForm } from "@/components/features/form/UserEditForm";
 import { H1 } from "@/components/features/typography/H1";
 import { Layout } from "@/components/layout/Layout";
 
@@ -14,7 +13,7 @@ export default function SettingsPage() {
   return (
     <Layout>
       <H1>ユーザー編集</H1>
-      <UserEditForm userId={id} />
+      {/* <UserEditForm userId={id} /> */}
     </Layout>
   );
 }

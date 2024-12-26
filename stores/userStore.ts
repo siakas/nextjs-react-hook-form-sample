@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
-import { dummyUsers } from "@/mock/dummyUsers";
 import type { User } from "@/types";
 
 type UserStore = {
@@ -18,7 +17,7 @@ export const useUserStore = create<UserStore>()(
   devtools(
     persist(
       (set) => ({
-        users: dummyUsers,
+        users: [],
         addUser: (user) =>
           set(
             (state) => ({
