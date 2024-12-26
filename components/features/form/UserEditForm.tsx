@@ -16,6 +16,21 @@
 // import { Input } from "@/components/ui/input";
 // import { useUserStore } from "@/stores/userStore";
 
+import { useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useUserStore } from "@/stores/userStore";
+import { userEditFormSchema, type UserEditFormInput } from "@/types/schema";
+
 // /** ユーザー情報編集用スキーマ */
 // const userEditSchema = z.object({
 //   username: z
@@ -27,17 +42,98 @@
 
 // type UserEdit = z.infer<typeof userEditSchema>;
 
-// type Props = {
-//   userId: string;
-// };
+type Props = {
+  userId: string;
+};
+
+export const UserEditForm = ({ userId }: Props) => {
+  const users = useUserStore((state) => state.users);
+  // console.log(users);
+
+  // ユーザー情報を取得
+  const user = users.find((user) => user.id === userId);
+
+  // フォームの設定
+  const form = useForm<UserEditFormInput>({
+    resolver: zodResolver(userEditFormSchema),
+  });
+
+  /** フォーム送信処理 */
+  const onSubmit = (formData: UserEditFormInput) => {};
+
+  // 取得したユーザーデータをフォームにセット
+  useEffect(() => {
+    if (user) {
+      form.reset({
+        email: user.email,
+        profile: {
+          fullName: user.profile?.fullName || "",
+        },
+      });
+    }
+  }, [form, user]);
+
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <Form {...form}>
+      <form className="mx-auto my-4 max-w-md space-y-4">
+        {/* ユーザー名は変更不可 */}
+        <div className="space-y-1">
+          <FormLabel>ユーザー名（変更できません）</FormLabel>
+          <Input value={user.username} readOnly className="bg-accent" />
+        </div>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>メールアドレス</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="profile.fullName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>名前</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* TODO: アバター画像のアップロードはファイルタイプにする必要がある */}
+        <FormField
+          control={form.control}
+          name="profile.avatarUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>アバター</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
+  );
+};
 
 // export const UserEditForm = ({ userId }: Props) => {
 //   const router = useRouter();
 //   const users = useUserStore((state) => state.users);
 //   const updateUser = useUserStore((state) => state.updateUser);
-
-//   // ユーザー情報を取得
-//   const user = users.find((user) => user.id === userId);
 
 //   // フォームを設定
 //   const form = useForm<UserEdit>({
