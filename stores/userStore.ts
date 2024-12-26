@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
-import type { User } from "@/types/schema";
+import type { User } from "@/types";
 
 type UserStore = {
   /** ユーザー一覧 */
@@ -9,8 +9,8 @@ type UserStore = {
   addUser: (user: User) => void;
   /** ユーザーを削除 */
   deleteUser: (id: string) => void;
-  /** ユーザーの更新 */
-  updateUser: (id: string, updates: Pick<User, "username" | "email">) => void;
+  // /** ユーザーの更新 */
+  // updateUser: (id: string, updates: Pick<User, "username" | "email">) => void;
 };
 
 export const useUserStore = create<UserStore>()(
@@ -34,16 +34,16 @@ export const useUserStore = create<UserStore>()(
             false,
             "User/deleteUser",
           ),
-        updateUser: (id, updates) =>
-          set(
-            (state) => ({
-              users: state.users.map((user) =>
-                user.id === id ? { ...user, ...updates } : user,
-              ),
-            }),
-            false,
-            "User/updateUser",
-          ),
+        // updateUser: (id, updates) =>
+        //   set(
+        //     (state) => ({
+        //       users: state.users.map((user) =>
+        //         user.id === id ? { ...user, ...updates } : user,
+        //       ),
+        //     }),
+        //     false,
+        //     "User/updateUser",
+        //   ),
       }),
       {
         name: "UserStore",

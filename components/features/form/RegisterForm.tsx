@@ -1,7 +1,7 @@
+import { useRouter } from "next/router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { v4 as uuidv4 } from "uuid";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,12 +13,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useUserStore } from "@/stores/userStore";
-import type { User } from "@/types/schema";
-import { userRegistrationSchema, type UserRegistration } from "@/types/schema";
+import type { User } from "@/types";
+import type { RegisterFormInput } from "@/types/schema";
+import { registerFormSchema } from "@/types/schema";
+import { createInitialUserData } from "@/utils/createInitialUserData";
 
-export const UserRegistrationForm = () => {
-  const form = useForm<UserRegistration>({
-    resolver: zodResolver(userRegistrationSchema),
+export const RegisterForm = () => {
+  const router = useRouter();
+
+  const form = useForm<RegisterFormInput>({
+    resolver: zodResolver(registerFormSchema),
     defaultValues: {
       username: "",
       email: "",
@@ -29,30 +33,31 @@ export const UserRegistrationForm = () => {
 
   const addUser = useUserStore((state) => state.addUser);
 
-  // ID と作成日時はフォームの送信データに含まないため除外
-  const onSubmit = (formData: UserRegistration) => {
-    // 送信時に ID と作成日時を設定
+  /** フォーム送信処理 */
+  const onSubmit = async (formData: RegisterFormInput) => {
+    // フォーム入力以外のユーザー情報のデフォルト値を生成
+    const initialUserData = createInitialUserData();
+
+    // デフォルト値を含めたユーザー情報を生成
     const newUser: User = {
-      ...formData,
-      id: uuidv4(),
-      createdAt: new Date(),
+      ...initialUserData,
+      username: formData.username,
+      email: formData.email,
+      hashedPassword: formData.password, // TODO: パスワードのハッシュ化処理は別途実装
     };
 
-    // ユーザーを保存
+    // ユーザーを保存し、フォームをリセット
     addUser(newUser);
-
-    // フォームをリセット
     form.reset();
 
-    toast("ユーザーを登録しました：", {
-      description: (
-        <pre className="mt-2 block w-full rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(newUser, null, 2)}</code>
-        </pre>
-      ),
-    });
+    // 通知処理
+    toast("ユーザーを登録しました");
+
+    // ページ遷移
+    await router.push("/");
   };
 
+  /** フォームリセット処理 */
   const handleReset = () => {
     form.reset();
     toast("フォームをリセットしました");
@@ -60,7 +65,10 @@ export const UserRegistrationForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto my-4 max-w-md space-y-4"
+      >
         <FormField
           control={form.control}
           name="username"

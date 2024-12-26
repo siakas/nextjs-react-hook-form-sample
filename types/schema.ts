@@ -1,41 +1,71 @@
 import { z } from "zod";
 
-/**
- * ユーザー登録フォームのスキーマ
- */
-export const userRegistrationSchema = z.object({
-  username: z
-    .string()
-    .min(3, "ユーザー名は3文字以上で入力してください")
-    .max(20, "ユーザー名は20文字以下で入力してください"),
-  email: z.string().email("有効なメールアドレスを入力してください"),
-  password: z
-    .string()
-    .min(8, "パスワードは8文字以上で入力してください")
-    .regex(
-      /^(?=.*[A-Za-z])(?=.*\d)/,
-      "パスワードは英字と数字を含める必要があります",
-    ),
-  confirmPassword: z.string().min(1, "確認用のパスワードを入力してください"),
-});
+// 基本的な検証ルール
+const usernameSchema = z
+  .string()
+  .min(3, "ユーザー名は 3 文字以上で入力してください")
+  .max(20, "ユーザー名は 20 文字以下で入力してください");
 
-// 確認用のパスワードが一致していることを確認
-// スキーマ定義と合わせて refine で拡張すると、extend が使えなくなるため別途定義している
-userRegistrationSchema.refine(
-  (data) => data.password === data.confirmPassword,
-  {
+const emailSchema = z.string().email("有効なメールアドレスを入力してください");
+
+const passwordSchema = z
+  .string()
+  .min(8, "パスワードは 8 文字以上で入力してください")
+  .regex(/[A-Za-z]/, "英字を含める必要があります")
+  .regex(/\d/, "数字を含める必要があります");
+
+/** 新規ユーザー登録フォームのスキーマ */
+export const registerFormSchema = z
+  .object({
+    username: usernameSchema,
+    email: emailSchema,
+    password: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((data) => data.password === data.confirmPassword, {
     message: "パスワードが一致しません",
     path: ["confirmPassword"],
-  },
-);
+  });
 
-/**
- * ストレージ管理するユーザー情報のスキーマ
- */
-export const userSchema = userRegistrationSchema.extend({
-  id: z.string().uuid(),
-  createdAt: z.date(),
+/** 新規ユーザー登録フォームの型 */
+export type RegisterFormInput = z.infer<typeof registerFormSchema>;
+
+/** ユーザー編集フォームのスキーマ */
+export const userEditFormSchema = z.object({
+  email: emailSchema,
+  profile: z.object({
+    fullName: z.string().max(50).optional(),
+    avatarUrl: z.string().url().optional(), // TODO: 画像アップロードのバリデーションに要変更
+    bio: z.string().max(500).optional(),
+    location: z.string().max(100).optional(),
+    website: z.string().url().optional(),
+  }),
+  settings: z.object({
+    language: z.string(),
+    timezone: z.string(),
+  }),
 });
+
+/** ユーザー編集フォームの型 */
+export type UserEditFormInput = z.infer<typeof userEditFormSchema>;
+
+/** 通知設定フォームのスキーマ */
+export const notificationsSettingsFormSchema = z.object({
+  settings: z.object({
+    notifications: z.object({
+      email: z.boolean(),
+      push: z.boolean(),
+    }),
+  }),
+});
+
+/** 通知設定フォームの型 */
+export type NotificationsSettingsFormInput = z.infer<
+  typeof notificationsSettingsFormSchema
+>;
+
+/** アクセス権変更フォームのスキーマ */
+// TODO: 個別のスキーマになるのか一括変更用のスキーマになるのか検討
 
 /**
  * アプリケーション設定のスキーマ
@@ -51,7 +81,4 @@ export const appSettingsSchema = z.object({
   }),
   theme: z.enum(["light", "dark"]),
 });
-
-export type UserRegistration = z.infer<typeof userRegistrationSchema>;
-export type User = z.infer<typeof userSchema>;
 export type AppSettings = z.infer<typeof appSettingsSchema>;
