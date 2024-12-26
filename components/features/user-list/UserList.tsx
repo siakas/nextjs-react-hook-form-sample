@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useUserStore } from "@/stores/userStore";
+import { toRoleText } from "@/utils/toRoleText";
 
 export const UserList = () => {
   const router = useRouter();
@@ -99,13 +100,7 @@ export const UserList = () => {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="outline">
-                    {user.role === "admin"
-                      ? "管理者"
-                      : user.role === "user"
-                        ? "一般ユーザー"
-                        : "未設定"}
-                  </Badge>
+                  <Badge variant="outline">{toRoleText(user.role)}</Badge>
                 </TableCell>
                 <TableCell>
                   <div className="flex gap-x-2">
