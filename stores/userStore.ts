@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import type { User } from "@/types";
+import type { UserEditFormInput } from "@/types/schema";
 
 type UserStore = {
   /** ユーザー一覧 */
@@ -10,7 +11,7 @@ type UserStore = {
   /** ユーザーを削除 */
   deleteUser: (id: string) => void;
   // /** ユーザーの更新 */
-  // updateUser: (id: string, updates: Pick<User, "username" | "email">) => void;
+  updateUser: (id: string, updates: UserEditFormInput) => void;
 };
 
 export const useUserStore = create<UserStore>()(
@@ -34,16 +35,27 @@ export const useUserStore = create<UserStore>()(
             false,
             "User/deleteUser",
           ),
-        // updateUser: (id, updates) =>
-        //   set(
-        //     (state) => ({
-        //       users: state.users.map((user) =>
-        //         user.id === id ? { ...user, ...updates } : user,
-        //       ),
-        //     }),
-        //     false,
-        //     "User/updateUser",
-        //   ),
+        updateUser: (id, updates) =>
+          set(
+            (state) => ({
+              users: state.users.map((user) =>
+                user.id === id
+                  ? {
+                      ...user,
+                      email: updates.email,
+                      profile: updates.profile,
+                      settings: {
+                        ...user.settings,
+                        language: updates.settings.language,
+                        timezone: updates.settings.timezone,
+                      },
+                    }
+                  : user,
+              ),
+            }),
+            false,
+            "User/updateUser",
+          ),
       }),
       {
         name: "UserStore",

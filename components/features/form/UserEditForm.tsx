@@ -1,24 +1,9 @@
-// import { useRouter } from "next/router";
-// import { useEffect } from "react";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { useForm } from "react-hook-form";
-// import { toast } from "sonner";
-// import { z } from "zod";
-// import { Button } from "@/components/ui/button";
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "@/components/ui/form";
-// import { Input } from "@/components/ui/input";
-// import { useUserStore } from "@/stores/userStore";
-
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -28,26 +13,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useUserStore } from "@/stores/userStore";
 import { userEditFormSchema, type UserEditFormInput } from "@/types/schema";
-
-// /** ユーザー情報編集用スキーマ */
-// const userEditSchema = z.object({
-//   username: z
-//     .string()
-//     .min(3, "ユーザー名は3文字以上で入力してください")
-//     .max(20, "ユーザー名は20文字以下で入力してください"),
-//   email: z.string().email("有効なメールアドレスを入力してください"),
-// });
-
-// type UserEdit = z.infer<typeof userEditSchema>;
 
 type Props = {
   userId: string;
 };
 
 export const UserEditForm = ({ userId }: Props) => {
+  const router = useRouter();
+
   const users = useUserStore((state) => state.users);
+  const updateUser = useUserStore((state) => state.updateUser);
   // console.log(users);
 
   // ユーザー情報を取得
@@ -56,10 +34,35 @@ export const UserEditForm = ({ userId }: Props) => {
   // フォームの設定
   const form = useForm<UserEditFormInput>({
     resolver: zodResolver(userEditFormSchema),
+    defaultValues: {
+      email: "",
+      profile: {
+        fullName: "",
+        avatarUrl: "",
+        bio: "",
+        location: "",
+        website: "",
+      },
+      settings: {
+        language: "",
+        timezone: "",
+      },
+    },
   });
 
   /** フォーム送信処理 */
-  const onSubmit = (formData: UserEditFormInput) => {};
+  const onSubmit = (formData: UserEditFormInput) => {
+    updateUser(userId, formData);
+    toast(`${user?.username}の情報を更新しました`);
+    router.push("/");
+  };
+
+  //   // ユーザー情報を更新
+  //   const onSubmit = (formData: UserEdit) => {
+  //     updateUser(userId, formData);
+  //     toast(`${formData.username}の情報を更新しました`);
+  //     router.push("/");
+  //   };
 
   // 取得したユーザーデータをフォームにセット
   useEffect(() => {
@@ -67,7 +70,15 @@ export const UserEditForm = ({ userId }: Props) => {
       form.reset({
         email: user.email,
         profile: {
-          fullName: user.profile?.fullName || "",
+          fullName: user.profile?.fullName ?? "",
+          avatarUrl: user.profile?.avatarUrl ?? "",
+          bio: user.profile?.bio ?? "",
+          location: user.profile?.location ?? "",
+          website: user.profile?.website ?? "",
+        },
+        settings: {
+          language: user.settings?.language ?? "",
+          timezone: user.settings?.timezone ?? "",
         },
       });
     }
@@ -79,7 +90,10 @@ export const UserEditForm = ({ userId }: Props) => {
 
   return (
     <Form {...form}>
-      <form className="mx-auto my-4 max-w-md space-y-4">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mx-auto my-4 max-w-md space-y-4"
+      >
         {/* ユーザー名は変更不可 */}
         <div className="space-y-1">
           <FormLabel>ユーザー名（変更できません）</FormLabel>
@@ -125,6 +139,86 @@ export const UserEditForm = ({ userId }: Props) => {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="profile.bio"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>自己紹介</FormLabel>
+              <FormControl>
+                <Textarea className="min-h-24" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="profile.location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>場所</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="profile.website"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>URL</FormLabel>
+              <FormControl>
+                <Input type="text" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* TODO: 言語はセレクトボックスに変更する */}
+        <FormField
+          control={form.control}
+          name="settings.language"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>言語</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* TODO: タイムゾーンはセレクトボックスに変更する */}
+        <FormField
+          control={form.control}
+          name="settings.timezone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>タイムゾーン</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex justify-center gap-4 pt-2">
+          <Button type="submit" className="min-w-24">
+            更新
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push("/")}
+            className="min-w-24"
+          >
+            キャンセル
+          </Button>
+        </div>
       </form>
     </Form>
   );
