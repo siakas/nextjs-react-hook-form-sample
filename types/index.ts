@@ -17,7 +17,7 @@ export type User = {
     location?: string;
     website?: string;
   };
-  role: "admin" | "user" | "guest" | null;
+  role: UserRole;
   settings: {
     // 通知設定
     notifications: {
@@ -28,3 +28,6 @@ export type User = {
     timezone: string;
   };
 };
+
+/** ユーザー権限の型 */
+export type UserRole = "admin" | "user" | "guest" | null;

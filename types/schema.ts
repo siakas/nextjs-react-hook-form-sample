@@ -35,10 +35,10 @@ export const userEditFormSchema = z.object({
   email: emailSchema,
   profile: z.object({
     fullName: z.string().max(50).optional(),
-    avatarUrl: z.string().url().optional(), // TODO: 画像アップロードのバリデーションに要変更
+    avatarUrl: z.string().url().optional().or(z.literal("")), // TODO: 画像アップロードのバリデーションに要変更
     bio: z.string().max(500).optional(),
     location: z.string().max(100).optional(),
-    website: z.string().url().optional(),
+    website: z.string().url().optional().or(z.literal("")), // URL 形式以外に空文字も受け付ける
   }),
   settings: z.object({
     language: z.string(),

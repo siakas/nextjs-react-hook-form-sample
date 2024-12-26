@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -15,6 +15,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useUserStore } from "@/stores/userStore";
+import { toRoleText } from "@/utils/toRoleText";
 
 export const UserList = () => {
   const router = useRouter();
@@ -44,13 +45,8 @@ export const UserList = () => {
     toast(`${username}のデータを削除しました`);
   };
 
-  /** ユーザー編集画面に遷移 */
-  const handleEdit = (id: string) => {
-    router.push(`/user/${id}/edit`);
-  };
-
   if (users.length === 0) {
-    return <p className="mt-6">登録されているユーザーはいません</p>;
+    return null;
   }
 
   return (
@@ -104,20 +100,21 @@ export const UserList = () => {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <Badge variant="outline">
-                    {user.role === "admin"
-                      ? "管理者"
-                      : user.role === "user"
-                        ? "一般ユーザー"
-                        : "未設定"}
-                  </Badge>
+                  <Badge variant="outline">{toRoleText(user.role)}</Badge>
                 </TableCell>
                 <TableCell>
                   <div className="flex gap-x-2">
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => handleEdit(user.id)}
+                      onClick={() => router.push(`/user/${user.id}`)}
+                    >
+                      <Eye className="size-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => router.push(`/user/${user.id}/edit`)}
                     >
                       <Pencil className="size-4" />
                     </Button>

@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type Props = {
   label: string;
@@ -20,7 +21,14 @@ export const UserStatisticsCard = ({ label, userCount, onClick }: Props) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="text-[64px] font-bold leading-none">{userCount}</div>
+        <div
+          className={cn(
+            "text-[64px] font-bold leading-none",
+            !userCount && "opacity-0",
+          )}
+        >
+          {userCount}
+        </div>
       </CardContent>
     </Card>
   );
