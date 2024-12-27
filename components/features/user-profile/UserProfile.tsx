@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { CircleCheck, CircleX } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -61,7 +62,19 @@ export const UserProfile = ({ userId }: Props) => {
           <div className="mt-2 space-y-1">
             <p>自己紹介：{user.profile?.bio}</p>
             <p>場所：{user.profile?.location}</p>
-            <p>ウェブサイト：{user.profile?.website}</p>
+            {user.profile?.website && (
+              <p>
+                ウェブサイト：
+                <Link
+                  href={user.profile.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline hover:no-underline"
+                >
+                  {user.profile?.website}
+                </Link>
+              </p>
+            )}
           </div>
         </CardContent>
       </Card>
