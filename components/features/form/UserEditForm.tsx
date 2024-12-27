@@ -206,7 +206,7 @@ export const UserEditForm = ({ userId }: Props) => {
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => router.push("/")}
+                onClick={() => router.push(`/user/${userId}`)}
                 className="min-w-24"
               >
                 キャンセル
