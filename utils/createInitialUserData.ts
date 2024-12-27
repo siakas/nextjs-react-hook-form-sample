@@ -23,8 +23,8 @@ export const createInitialUserData = (): Omit<
   role: null,
   settings: {
     notifications: {
-      email: true,
-      push: true,
+      email: false,
+      push: false,
     },
     language: "ja",
     timezone: "Asia/Tokyo",

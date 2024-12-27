@@ -55,7 +55,7 @@ export const UserEditForm = ({ userId }: Props) => {
   const onSubmit = (formData: UserEditFormInput) => {
     updateUser(userId, formData);
     toast(`${user?.username}の情報を更新しました`);
-    router.push("/");
+    router.push(`/user/${userId}`);
   };
 
   // 初期表示としてユーザー情報をフォームにセット
