@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { Eye, Pencil } from "lucide-react";
+import { UserAvatar } from "@/components/common/user-avatar/UserAvatar";
 import { DeleteUserDialog } from "@/components/features/dialog/DeleteUserDialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
@@ -21,10 +21,7 @@ export const UserTableRow = ({ user }: Props) => {
   return (
     <TableRow key={user.id}>
       <TableCell>
-        <Avatar>
-          <AvatarImage src={user.profile?.avatarUrl} alt={user.username} />
-          <AvatarFallback>{user.username[0]}</AvatarFallback>
-        </Avatar>
+        <UserAvatar src={user.profile?.avatarUrl} username={user.username} />
       </TableCell>
       <TableCell className="whitespace-nowrap">{user.username}</TableCell>
       <TableCell className="whitespace-nowrap">

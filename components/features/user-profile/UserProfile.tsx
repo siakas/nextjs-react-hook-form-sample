@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { AvatarImage } from "@radix-ui/react-avatar";
 import { CircleCheck, CircleX } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { UserAvatar } from "@/components/common/user-avatar/UserAvatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { useUserStore } from "@/stores/userStore";
@@ -27,10 +26,12 @@ export const UserProfile = ({ userId }: Props) => {
       <Card>
         <CardContent className="p-6">
           <div className="flex items-center gap-4">
-            <Avatar className="size-20">
-              <AvatarImage src={user.profile?.avatarUrl} alt={user.username} />
-              <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
-            </Avatar>
+            <UserAvatar
+              src={user.profile?.avatarUrl}
+              username={user.username}
+              size="lg"
+              isUpperCase={true}
+            />
             <div>
               <p className="text-xs text-gray-500">{user.id}</p>
               <h2 className="flex items-center gap-2 text-2xl font-bold">
