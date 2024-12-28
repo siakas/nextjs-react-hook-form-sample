@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil } from "lucide-react";
 import { toast } from "sonner";
+import { DeleteUserDialog } from "@/components/features/dialog/DeleteUserDialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -118,13 +119,10 @@ export const UserList = () => {
                     >
                       <Pencil className="size-4" />
                     </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
+                    <DeleteUserDialog
                       onClick={() => handleDelete(user.id, user.username)}
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
+                      username={user.username}
+                    />
                   </div>
                 </TableCell>
               </TableRow>

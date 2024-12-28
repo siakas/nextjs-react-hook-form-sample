@@ -6,11 +6,11 @@ import type { UserEditFormInput } from "@/types/schema";
 type UserStore = {
   /** ユーザー一覧 */
   users: User[];
-  /** ユーザーを追加 */
+  /** ユーザー追加 */
   addUser: (user: User) => void;
-  /** ユーザーを削除 */
+  /** ユーザー削除 */
   deleteUser: (id: string) => void;
-  // /** ユーザーの更新 */
+  /** ユーザー情報更新 */
   updateUser: (id: string, updates: UserEditFormInput) => void;
 };
 
