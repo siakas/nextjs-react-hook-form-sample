@@ -1,4 +1,4 @@
-import { CircleCheck, CircleX } from "lucide-react";
+import { StatusCircleIcon } from "@/components/common/StatusCircleIcon";
 import type { User } from "@/types";
 
 type Props = {
@@ -14,11 +14,7 @@ export const UserProfileBasic = ({ user }: Props) => {
         <p>{user.hashedPassword}</p>
         <p className="flex items-center">
           メール認証：
-          {user.isEmailVerified ? (
-            <CircleCheck className="size-4 text-green-500" />
-          ) : (
-            <CircleX className="size-4 text-red-500" />
-          )}
+          <StatusCircleIcon isActive={user.isEmailVerified} />
         </p>
         <p>登録日：{user.createdAt}</p>
         <p>最終更新日：{user.updatedAt}</p>

@@ -1,4 +1,4 @@
-import { CircleCheck, CircleX } from "lucide-react";
+import { StatusCircleIcon } from "@/components/common/StatusCircleIcon";
 import type { User } from "@/types";
 
 type Props = {
@@ -12,19 +12,11 @@ export const UserSettingsNotification = ({ user }: Props) => {
       <div className="mt-2 space-y-1">
         <p className="flex items-center">
           メール通知：
-          {user.settings.notifications.email ? (
-            <CircleCheck className="size-4 text-green-500" />
-          ) : (
-            <CircleX className="size-4 text-red-500" />
-          )}
+          <StatusCircleIcon isActive={user.settings.notifications.email} />
         </p>
         <p className="flex items-center">
           プッシュ通知：
-          {user.settings.notifications.push ? (
-            <CircleCheck className="size-4 text-green-500" />
-          ) : (
-            <CircleX className="size-4 text-red-500" />
-          )}
+          <StatusCircleIcon isActive={user.settings.notifications.push} />
         </p>
       </div>
     </>
