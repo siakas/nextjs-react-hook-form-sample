@@ -3,13 +3,14 @@ import { Eye, Pencil } from "lucide-react";
 import { DeleteUserDialog } from "@/components/features/dialog/DeleteUserDialog";
 import { Button } from "@/components/ui/button";
 import type { User } from "@/types";
+import type { DeleteUserHandler } from "@/types/callbacks";
 
 type Props = {
   user: User;
-  onDelete: (id: string, username: string) => void;
+  onDeleteUser: DeleteUserHandler;
 };
 
-export const UserActionButtons = ({ user, onDelete }: Props) => {
+export const UserActionButtons = ({ user, onDeleteUser }: Props) => {
   const router = useRouter();
 
   return (
@@ -29,7 +30,7 @@ export const UserActionButtons = ({ user, onDelete }: Props) => {
         <Pencil className="size-4" />
       </Button>
       <DeleteUserDialog
-        onClick={() => onDelete(user.id, user.username)}
+        onDelete={() => onDeleteUser(user.id, user.username)}
         username={user.username}
       />
     </div>

@@ -11,7 +11,7 @@ type Props = {
 };
 
 export const UserTableRow = ({ user }: Props) => {
-  const { handleDelete } = useUserAction();
+  const { handleDeleteUser } = useUserAction();
 
   return (
     <TableRow key={user.id}>
@@ -30,7 +30,7 @@ export const UserTableRow = ({ user }: Props) => {
         <UserBadgeRole user={user} />
       </TableCell>
       <TableCell>
-        <UserActionButtons user={user} onDelete={handleDelete} />
+        <UserActionButtons user={user} onDeleteUser={handleDeleteUser} />
       </TableCell>
     </TableRow>
   );
