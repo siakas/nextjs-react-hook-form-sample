@@ -1,8 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -15,8 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useUserStore } from "@/stores/userStore";
-import { userEditFormSchema, type UserEditFormInput } from "@/types/schema";
+import { useUserEditForm } from "@/hooks/form/useUserEditForm";
 
 type Props = {
   userId: string;
@@ -24,39 +20,7 @@ type Props = {
 
 export const UserEditForm = ({ userId }: Props) => {
   const router = useRouter();
-
-  // ストアからユーザー一覧と更新メソッドを取得
-  const users = useUserStore((state) => state.users);
-  const updateUser = useUserStore((state) => state.updateUser);
-
-  // userId に一致するユーザー情報を取得
-  const user = users.find((user) => user.id === userId);
-
-  // フォームの設定
-  const form = useForm<UserEditFormInput>({
-    resolver: zodResolver(userEditFormSchema),
-    defaultValues: {
-      email: "",
-      profile: {
-        fullName: "",
-        avatarUrl: "",
-        bio: "",
-        location: "",
-        website: "",
-      },
-      settings: {
-        language: "",
-        timezone: "",
-      },
-    },
-  });
-
-  /** フォーム送信処理 */
-  const onSubmit = (formData: UserEditFormInput) => {
-    updateUser(userId, formData);
-    toast(`${user?.username}の情報を更新しました`);
-    router.push(`/user/${userId}`);
-  };
+  const { form, user, onSubmit } = useUserEditForm(userId);
 
   // 初期表示としてユーザー情報をフォームにセット
   useEffect(() => {

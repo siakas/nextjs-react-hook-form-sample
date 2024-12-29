@@ -12,15 +12,15 @@ import {
 } from "@/components/ui/dialog";
 
 type Props = {
-  onClick: () => void;
+  onDelete: () => void;
   username?: string;
 };
 
-export const DeleteUserDialog = ({ onClick, username }: Props) => {
+export const DeleteUserDialog = ({ onDelete, username }: Props) => {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" aria-label={`${username}を削除`}>
           <Trash2 className="size-4" />
         </Button>
       </DialogTrigger>
@@ -40,7 +40,7 @@ export const DeleteUserDialog = ({ onClick, username }: Props) => {
           <DialogClose asChild>
             <Button variant="outline">キャンセル</Button>
           </DialogClose>
-          <Button onClick={onClick}>削除</Button>
+          <Button onClick={onDelete}>削除</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
