@@ -1,10 +1,7 @@
-import { useRouter } from "next/router";
-import { Eye, Pencil } from "lucide-react";
 import { UserAvatar } from "@/components/common/UserAvatar";
 import { UserBadgeIsActive } from "@/components/common/UserBadgeIsActive";
 import { UserBadgeRole } from "@/components/common/UserBadgeRole";
-import { DeleteUserDialog } from "@/components/features/dialog/DeleteUserDialog";
-import { Button } from "@/components/ui/button";
+import { UserActionButtons } from "@/components/features/user-list/UserActionButtons";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useUserAction } from "@/hooks/user-list/useUserAction";
 import type { User } from "@/types";
@@ -14,8 +11,6 @@ type Props = {
 };
 
 export const UserTableRow = ({ user }: Props) => {
-  const router = useRouter();
-
   const { handleDelete } = useUserAction();
 
   return (
@@ -35,26 +30,7 @@ export const UserTableRow = ({ user }: Props) => {
         <UserBadgeRole user={user} />
       </TableCell>
       <TableCell>
-        <div className="flex gap-x-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => router.push(`/user/${user.id}`)}
-          >
-            <Eye className="size-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => router.push(`/user/${user.id}/edit`)}
-          >
-            <Pencil className="size-4" />
-          </Button>
-          <DeleteUserDialog
-            onClick={() => handleDelete(user.id, user.username)}
-            username={user.username}
-          />
-        </div>
+        <UserActionButtons user={user} onDelete={handleDelete} />
       </TableCell>
     </TableRow>
   );
