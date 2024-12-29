@@ -4,14 +4,14 @@ import { UserProfileHeader } from "@/components/features/user-profile/UserProfil
 import { UserSettingsNotification } from "@/components/features/user-profile/UserSettingsNotification";
 import { UserSettingsOther } from "@/components/features/user-profile/UserSettingsOther";
 import { Card, CardContent } from "@/components/ui/card";
-import { useUserProfile } from "@/hooks/user-profile/useUserProfile";
+import { useGetUserById } from "@/hooks/useGetUserById";
 
 type Props = {
   userId: string;
 };
 
 export const UserProfile = ({ userId }: Props) => {
-  const { user } = useUserProfile(userId);
+  const { user } = useGetUserById(userId);
 
   if (!user) {
     return null;
