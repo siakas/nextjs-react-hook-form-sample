@@ -1,7 +1,7 @@
-import { UserAvatar } from "@/components/common/user-avatar/UserAvatar";
-import { Badge } from "@/components/ui/badge";
+import { UserAvatar } from "@/components/common/UserAvatar";
+import { UserBadgeIsActive } from "@/components/common/UserBadgeIsActive";
+import { UserBadgeRole } from "@/components/common/UserBadgeRole";
 import type { User } from "@/types";
-import { toRoleText } from "@/utils/toRoleText";
 
 type Props = {
   user: User;
@@ -20,10 +20,8 @@ export const UserProfileHeader = ({ user }: Props) => {
         <p className="text-xs text-gray-500">{user.id}</p>
         <h2 className="flex items-center gap-2 text-2xl font-bold">
           {user.profile?.fullName || user.username}
-          <Badge variant={user.isActive ? "default" : "secondary"}>
-            {user.isActive ? "アクティブ" : "非アクティブ"}
-          </Badge>
-          <Badge variant="outline">{toRoleText(user.role)}</Badge>
+          <UserBadgeIsActive user={user} />
+          <UserBadgeRole user={user} />
         </h2>
         <p className="font-semibold text-gray-500">@{user.username}</p>
       </div>

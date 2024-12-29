@@ -1,13 +1,13 @@
 import { useRouter } from "next/router";
 import { Eye, Pencil } from "lucide-react";
-import { UserAvatar } from "@/components/common/user-avatar/UserAvatar";
+import { UserAvatar } from "@/components/common/UserAvatar";
+import { UserBadgeIsActive } from "@/components/common/UserBadgeIsActive";
+import { UserBadgeRole } from "@/components/common/UserBadgeRole";
 import { DeleteUserDialog } from "@/components/features/dialog/DeleteUserDialog";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useUserAction } from "@/hooks/user-list/useUserAction";
 import type { User } from "@/types";
-import { toRoleText } from "@/utils/toRoleText";
 
 type Props = {
   user: User;
@@ -29,12 +29,10 @@ export const UserTableRow = ({ user }: Props) => {
       </TableCell>
       <TableCell className="whitespace-nowrap">{user.email}</TableCell>
       <TableCell className="whitespace-nowrap">
-        <Badge variant={user.isActive ? "default" : "secondary"}>
-          {user.isActive ? "アクティブ" : "非アクティブ"}
-        </Badge>
+        <UserBadgeIsActive user={user} />
       </TableCell>
       <TableCell>
-        <Badge variant="outline">{toRoleText(user.role)}</Badge>
+        <UserBadgeRole user={user} />
       </TableCell>
       <TableCell>
         <div className="flex gap-x-2">
