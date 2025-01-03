@@ -65,19 +65,19 @@ export type NotificationsSettingsFormInput = z.infer<
 >;
 
 /** ステータスおよびアクセス権の一括変更スキーマ */
-const userBulkEditSchema = z.object({
+const userBulkUpdateSchema = z.object({
   id: z.string().uuid(),
   isActive: z.boolean(),
   role: z.enum(["admin", "user", "guest"]).nullable(),
 });
 
 /** ステータスおよびアクセス権の一括変更フォームのスキーマ */
-export const bulkEditFormSchema = z.object({
-  users: z.array(userBulkEditSchema),
+export const bulkUpdateFormSchema = z.object({
+  users: z.array(userBulkUpdateSchema),
 });
 
 /** ステータスおよびアクセス権の一括変更フォームの型 */
-export type BulkEditFormInput = z.infer<typeof bulkEditFormSchema>;
+export type BulkUpdateFormInput = z.infer<typeof bulkUpdateFormSchema>;
 
 /**
  * アプリケーション設定のスキーマ

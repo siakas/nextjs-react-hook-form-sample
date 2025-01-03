@@ -19,7 +19,7 @@ type Props = {
 export const DeleteUserDialog = ({ onDelete, username }: Props) => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button variant="outline" size="icon" aria-label={`${username}を削除`}>
           <Trash2 className="size-4" />
         </Button>
