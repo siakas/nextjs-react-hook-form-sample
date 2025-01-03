@@ -64,8 +64,20 @@ export type NotificationsSettingsFormInput = z.infer<
   typeof notificationsSettingsFormSchema
 >;
 
-/** アクセス権変更フォームのスキーマ */
-// TODO: 個別のスキーマになるのか一括変更用のスキーマになるのか検討
+/** ステータスおよびアクセス権の一括変更スキーマ */
+const userBulkEditSchema = z.object({
+  id: z.string().uuid(),
+  isActive: z.boolean(),
+  role: z.enum(["admin", "user", "guest"]).nullable(),
+});
+
+/** ステータスおよびアクセス権の一括変更フォームのスキーマ */
+export const bulkEditFormSchema = z.object({
+  users: z.array(userBulkEditSchema),
+});
+
+/** ステータスおよびアクセス権の一括変更フォームの型 */
+export type BulkEditFormInput = z.infer<typeof bulkEditFormSchema>;
 
 /**
  * アプリケーション設定のスキーマ

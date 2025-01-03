@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { createJSONStorage, devtools, persist } from "zustand/middleware";
 import type { User } from "@/types";
+import type { BulkUpdateUsersHandler } from "@/types/callbacks";
 import type { UserEditFormInput } from "@/types/schema";
 
 type UserStore = {
@@ -12,6 +13,8 @@ type UserStore = {
   deleteUser: (id: string) => void;
   /** ユーザー情報更新 */
   updateUser: (id: string, updates: UserEditFormInput) => void;
+  /** ユーザー情報一括更新 */
+  bulkUpdateUsers: BulkUpdateUsersHandler;
 };
 
 export const useUserStore = create<UserStore>()(
@@ -55,6 +58,23 @@ export const useUserStore = create<UserStore>()(
             }),
             false,
             "User/updateUser",
+          ),
+        bulkUpdateUsers: (updates) =>
+          set(
+            (state) => ({
+              users: state.users.map((user) => {
+                const update = updates.find((u) => u.id === user.id);
+                return update
+                  ? {
+                      ...user,
+                      isActive: update.isActive,
+                      role: update.role,
+                    }
+                  : user;
+              }),
+            }),
+            false,
+            "User/bulkUpdateUsers",
           ),
       }),
       {
