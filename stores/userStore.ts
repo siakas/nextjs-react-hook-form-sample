@@ -15,6 +15,15 @@ type UserStore = {
   updateUser: (id: string, updates: UserEditFormInput) => void;
   /** ユーザー情報一括更新 */
   bulkUpdateUsers: BulkUpdateUsersHandler;
+
+  /** 選択されたユーザーの ID 一覧 */
+  selectedUserIds: Set<string>;
+  /** 個別のユーザー選択を切り替え */
+  toggleUserSelection: (userId: string) => void;
+  /** すべてのユーザー選択を切り替え */
+  toggleAllUsers: () => void;
+  /** ユーザー選択を解除 */
+  clearSelection: () => void;
 };
 
 export const useUserStore = create<UserStore>()(
@@ -76,6 +85,38 @@ export const useUserStore = create<UserStore>()(
             false,
             "User/bulkUpdateUsers",
           ),
+
+        selectedUserIds: new Set(),
+        toggleUserSelection: (userId) =>
+          set(
+            (state) => {
+              // 前の状態を複製
+              const next = new Set(state.selectedUserIds);
+              if (next.has(userId)) {
+                // すでに存在する場合は削除
+                next.delete(userId);
+              } else {
+                // 存在しない場合は追加
+                next.add(userId);
+              }
+              return { selectedUserIds: next };
+            },
+            false,
+            "User/toggleUserSelection",
+          ),
+        toggleAllUsers: () =>
+          set((state) => {
+            if (state.selectedUserIds.size === state.users.length) {
+              // すべて選択済みの場合はクリア
+              return { selectedUserIds: new Set() };
+            } else {
+              return {
+                selectedUserIds: new Set(state.users.map((user) => user.id)),
+              };
+            }
+          }),
+        clearSelection: () =>
+          set({ selectedUserIds: new Set() }, false, "User/clearSelection"),
       }),
       {
         name: "UserStore",

@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { useUserSelection } from "@/hooks/user-list/useUserSelection";
+import { cn } from "@/lib/utils";
 import { useUserStore } from "@/stores/userStore";
 
 export const UserList = () => {
@@ -34,16 +35,21 @@ export const UserList = () => {
   return (
     <Card className="my-6">
       <CardHeader>
-        <CardTitle>ユーザーリスト</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {hasSelectedUsers && (
-          <div className="mb-3">
+        <CardTitle className="flex items-center gap-2">
+          <div>ユーザーリスト</div>
+          <div
+            className={cn(
+              "opacity-0 transition-opacity",
+              hasSelectedUsers && "opacity-100",
+            )}
+          >
             <Button onClick={deleteSelectedUsers}>
               選択したユーザーの一括削除
             </Button>
           </div>
-        )}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
         <Table>
           <UserTableHeader />
           <TableBody>

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { UserBulkUpdateTableHeader } from "@/components/features/user-bulk-update/UserBulkUpdateTableHeader";
 import { UserBulkUpdateTableRow } from "@/components/features/user-bulk-update/UserBulkUpdateTableRow";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,7 @@ import { Table, TableBody } from "@/components/ui/table";
 import { useBulkUpdateForm } from "@/hooks/form/useBulkUpdateForm";
 
 export const UserBulkUpdateForm = () => {
+  const router = useRouter();
   const { form, onSubmit } = useBulkUpdateForm();
 
   return (
@@ -17,7 +19,11 @@ export const UserBulkUpdateForm = () => {
             <CardTitle>アクセス権一括変更</CardTitle>
             <div className="flex gap-2">
               <Button type="submit">変更</Button>
-              <Button type="button" variant="outline">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => router.push("/")}
+              >
                 キャンセル
               </Button>
             </div>
