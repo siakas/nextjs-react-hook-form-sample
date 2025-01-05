@@ -23,16 +23,16 @@ export const useUserSelection = () => {
 
   /** ユーザーが選択されているかどうか */
   const isSelected = useCallback(
-    (userId: string) => selectedUserIds.has(userId),
+    (userId: string) => selectedUserIds.includes(userId),
     [selectedUserIds],
   );
 
   /** すべてのユーザーが選択されているかどうか */
   const isAllSelected =
-    users.length > 0 && selectedUserIds.size === users.length;
+    users.length > 0 && selectedUserIds.length === users.length;
 
   /** 選択されているユーザーが存在するかどうか */
-  const hasSelectedUsers = selectedUserIds.size > 0;
+  const hasSelectedUsers = selectedUserIds.length > 0;
 
   return {
     isSelected,
