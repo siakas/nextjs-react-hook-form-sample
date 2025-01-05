@@ -2,6 +2,7 @@ import { UserAvatar } from "@/components/common/UserAvatar";
 import { UserBadgeIsActive } from "@/components/common/UserBadgeIsActive";
 import { UserBadgeRole } from "@/components/common/UserBadgeRole";
 import { UserActionButtons } from "@/components/features/user-list/UserActionButtons";
+import { Checkbox } from "@/components/ui/checkbox";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useUserAction } from "@/hooks/user-list/useUserAction";
 import type { User } from "@/types";
@@ -15,6 +16,9 @@ export const UserTableRow = ({ user }: Props) => {
 
   return (
     <TableRow key={user.id}>
+      <TableCell>
+        <Checkbox />
+      </TableCell>
       <TableCell>
         <UserAvatar src={user.profile?.avatarUrl} username={user.username} />
       </TableCell>

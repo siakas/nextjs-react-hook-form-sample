@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { UserTableHeader } from "@/components/features/user-list/UserTableHeader";
 import { UserTableRow } from "@/components/features/user-list/UserTableRow";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { useUserStore } from "@/stores/userStore";
@@ -37,6 +38,9 @@ export const UserList = () => {
         <CardTitle>ユーザーリスト</CardTitle>
       </CardHeader>
       <CardContent>
+        <div className="mb-3">
+          <Button>選択したユーザーの一括削除</Button>
+        </div>
         <Table>
           <UserTableHeader />
           <TableBody>
