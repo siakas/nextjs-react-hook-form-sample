@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -14,13 +15,23 @@ export const useBulkUpdateForm = () => {
   const form = useForm<BulkUpdateFormInput>({
     resolver: zodResolver(bulkUpdateFormSchema),
     defaultValues: {
-      users: users.map((user) => ({
-        id: user.id,
-        isActive: user.isActive,
-        role: user.role,
-      })),
+      users: [], // 初期値は空配列とする
     },
   });
+
+  // リロード時に users の値の取得が間に合わないことがあるため、
+  // users の値が変更されたらフォームの値を更新する
+  useEffect(() => {
+    if (users.length > 0) {
+      form.reset({
+        users: users.map((user) => ({
+          id: user.id,
+          isActive: user.isActive,
+          role: user.role,
+        })),
+      });
+    }
+  }, [users, form]);
 
   const onSubmit = (formData: BulkUpdateFormInput) => {
     bulkUpdateUsers(formData.users);
