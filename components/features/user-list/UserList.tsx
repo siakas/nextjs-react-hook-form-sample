@@ -5,6 +5,7 @@ import { UserTableRow } from "@/components/features/user-list/UserTableRow";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
+import { useUserSelection } from "@/hooks/user-list/useUserSelection";
 import { useUserStore } from "@/stores/userStore";
 
 export const UserList = () => {
@@ -15,15 +16,13 @@ export const UserList = () => {
 
   const users = useUserStore((state) => state.users);
 
+  const { hasSelectedUsers, deleteSelectedUsers } = useUserSelection();
+
   // フィルタリング条件によってユーザーを絞り込む
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
-      if (filter === "active") {
-        return user.isActive;
-      }
-      if (filter === "admin") {
-        return user.role === "admin";
-      }
+      if (filter === "active") return user.isActive;
+      if (filter === "admin") return user.role === "admin";
       return true;
     });
   }, [users, filter]);
@@ -38,9 +37,13 @@ export const UserList = () => {
         <CardTitle>ユーザーリスト</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="mb-3">
-          <Button>選択したユーザーの一括削除</Button>
-        </div>
+        {hasSelectedUsers && (
+          <div className="mb-3">
+            <Button onClick={deleteSelectedUsers}>
+              選択したユーザーの一括削除
+            </Button>
+          </div>
+        )}
         <Table>
           <UserTableHeader />
           <TableBody>

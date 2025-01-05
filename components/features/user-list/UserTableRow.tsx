@@ -5,6 +5,7 @@ import { UserActionButtons } from "@/components/features/user-list/UserActionBut
 import { Checkbox } from "@/components/ui/checkbox";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useUserAction } from "@/hooks/user-list/useUserAction";
+import { useUserSelection } from "@/hooks/user-list/useUserSelection";
 import type { User } from "@/types";
 
 type Props = {
@@ -13,11 +14,15 @@ type Props = {
 
 export const UserTableRow = ({ user }: Props) => {
   const { handleDeleteUser } = useUserAction();
+  const { isSelected, toggleUserSelection } = useUserSelection();
 
   return (
     <TableRow key={user.id}>
       <TableCell>
-        <Checkbox />
+        <Checkbox
+          checked={isSelected(user.id)}
+          onCheckedChange={() => toggleUserSelection(user.id)}
+        />
       </TableCell>
       <TableCell>
         <UserAvatar src={user.profile?.avatarUrl} username={user.username} />
