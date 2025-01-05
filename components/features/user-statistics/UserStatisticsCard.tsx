@@ -21,12 +21,7 @@ export const UserStatisticsCard = ({ label, userCount, onClick }: Props) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div
-          className={cn(
-            "text-[64px] font-bold leading-none",
-            !userCount && "opacity-0",
-          )}
-        >
+        <div className={cn("text-[64px] font-bold leading-none")}>
           {userCount}
         </div>
       </CardContent>

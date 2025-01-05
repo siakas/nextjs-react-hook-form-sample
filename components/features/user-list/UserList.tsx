@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { BulkDeleteUsersDialog } from "@/components/features/dialog/BulkDeleteUsersDialog";
 import { UserTableHeader } from "@/components/features/user-list/UserTableHeader";
 import { UserTableRow } from "@/components/features/user-list/UserTableRow";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { useUserSelection } from "@/hooks/user-list/useUserSelection";
@@ -29,7 +29,13 @@ export const UserList = () => {
   }, [users, filter]);
 
   if (users.length === 0) {
-    return null;
+    return (
+      <Card>
+        <CardContent className="p-6 text-center">
+          ユーザーが登録されていません。
+        </CardContent>
+      </Card>
+    );
   }
 
   return (
@@ -43,9 +49,7 @@ export const UserList = () => {
               hasSelectedUsers && "opacity-100",
             )}
           >
-            <Button onClick={deleteSelectedUsers}>
-              選択したユーザーの一括削除
-            </Button>
+            <BulkDeleteUsersDialog onDelete={deleteSelectedUsers} />
           </div>
         </CardTitle>
       </CardHeader>

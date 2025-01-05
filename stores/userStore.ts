@@ -17,7 +17,7 @@ type UserStore = {
   bulkUpdateUsers: BulkUpdateUsersHandler;
 
   /** 選択されたユーザーの ID 一覧 */
-  selectedUserIds: Set<string>;
+  selectedUserIds: string[];
   /** 個別のユーザー選択を切り替え */
   toggleUserSelection: (userId: string) => void;
   /** すべてのユーザー選択を切り替え */
@@ -86,37 +86,26 @@ export const useUserStore = create<UserStore>()(
             "User/bulkUpdateUsers",
           ),
 
-        selectedUserIds: new Set(),
+        selectedUserIds: [],
         toggleUserSelection: (userId) =>
           set(
-            (state) => {
-              // 前の状態を複製
-              const next = new Set(state.selectedUserIds);
-              if (next.has(userId)) {
-                // すでに存在する場合は削除
-                next.delete(userId);
-              } else {
-                // 存在しない場合は追加
-                next.add(userId);
-              }
-              return { selectedUserIds: next };
-            },
+            (state) => ({
+              selectedUserIds: state.selectedUserIds.includes(userId)
+                ? state.selectedUserIds.filter((id) => id !== userId)
+                : [...state.selectedUserIds, userId],
+            }),
             false,
             "User/toggleUserSelection",
           ),
         toggleAllUsers: () =>
-          set((state) => {
-            if (state.selectedUserIds.size === state.users.length) {
-              // すべて選択済みの場合はクリア
-              return { selectedUserIds: new Set() };
-            } else {
-              return {
-                selectedUserIds: new Set(state.users.map((user) => user.id)),
-              };
-            }
-          }),
+          set((state) => ({
+            selectedUserIds:
+              state.selectedUserIds.length === state.users.length
+                ? []
+                : state.users.map((user) => user.id),
+          })),
         clearSelection: () =>
-          set({ selectedUserIds: new Set() }, false, "User/clearSelection"),
+          set({ selectedUserIds: [] }, false, "User/clearSelection"),
       }),
       {
         name: "UserStore",
