@@ -29,7 +29,13 @@ export const UserList = () => {
   }, [users, filter]);
 
   if (users.length === 0) {
-    return null;
+    return (
+      <Card>
+        <CardContent className="p-6 text-center">
+          ユーザーが登録されていません。
+        </CardContent>
+      </Card>
+    );
   }
 
   return (
