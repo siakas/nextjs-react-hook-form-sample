@@ -5,15 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormField } from "@/components/ui/form";
 import { Table, TableBody } from "@/components/ui/table";
 import { useBulkUpdateForm } from "@/hooks/form/useBulkUpdateForm";
-import { useUserStore } from "@/stores/userStore";
 
 export const UserBulkUpdateForm = () => {
   const { form, onSubmit } = useBulkUpdateForm();
-  const users = useUserStore((state) => state.users);
-
-  if (users.length === 0) {
-    return null;
-  }
 
   return (
     <Card className="my-6">
