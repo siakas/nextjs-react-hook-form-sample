@@ -6,14 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormField } from "@/components/ui/form";
 import { Table, TableBody } from "@/components/ui/table";
 import { useBulkUpdateForm } from "@/hooks/form/useBulkUpdateForm";
-import { useUserStore } from "@/stores/userStore";
 
 export const UserBulkUpdateForm = () => {
   const router = useRouter();
   const { form, onSubmit } = useBulkUpdateForm();
 
-  // UI 表示切り替えのためのユーザー情報を取得
-  const users = useUserStore((state) => state.users);
+  // ユーザー配列の値を監視（watch）し、変更があるたびに再取得する
+  const users = form.watch("users");
+
+  // console.log("users:", users);
+  // console.log("users.length:", users.length);
 
   return (
     <Card className="my-6">
