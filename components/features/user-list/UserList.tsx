@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { BulkDeleteUsersDialog } from "@/components/features/dialog/BulkDeleteUsersDialog";
 import { UserTableHeader } from "@/components/features/user-list/UserTableHeader";
 import { UserTableRow } from "@/components/features/user-list/UserTableRow";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody } from "@/components/ui/table";
 import { useUserSelection } from "@/hooks/user-list/useUserSelection";
@@ -31,8 +33,13 @@ export const UserList = () => {
   if (users.length === 0) {
     return (
       <Card>
-        <CardContent className="p-6 text-center">
-          ユーザーが登録されていません。
+        <CardContent className="p-6">
+          <p className="text-center">ユーザーが登録されていません。</p>
+          <div className="mt-4 flex justify-center gap-4">
+            <Button asChild>
+              <Link href="/user/new">新規ユーザー登録</Link>
+            </Button>
+          </div>
         </CardContent>
       </Card>
     );
